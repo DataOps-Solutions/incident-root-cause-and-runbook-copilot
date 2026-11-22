@@ -1,0 +1,22 @@
+{
+  "signals": [
+    {"signal_id": "sig-001", "source": "cloudwatch", "component": "orders-db", "signal_type": "metric", "name": "read_latency_p95_ms", "severity": "warning", "observed_at": "2026-11-22T12:24:00Z", "value": 38.0, "threshold": 25.0, "message": "p95 read latency above threshold"},
+    {"signal_id": "sig-002", "source": "cloudwatch", "component": "orders-db", "signal_type": "metric", "name": "read_latency_p95_ms", "severity": "warning", "observed_at": "2026-11-22T12:30:00Z", "value": 74.0, "threshold": 25.0, "message": "p95 read latency still rising"},
+    {"signal_id": "sig-003", "source": "postgres_log", "component": "orders-db", "signal_type": "log_error", "name": "statement_timeout", "severity": "warning", "observed_at": "2026-11-22T12:33:00Z", "value": null, "threshold": null, "message": "canceling statement due to statement timeout"},
+    {"signal_id": "sig-004", "source": "postgres_exporter", "component": "orders-db", "signal_type": "metric", "name": "active_sessions", "severity": "warning", "observed_at": "2026-11-22T12:37:00Z", "value": 96.0, "threshold": 80.0, "message": "active sessions above threshold"},
+    {"signal_id": "sig-005", "source": "airflow", "component": "etl-orders-daily", "signal_type": "metric", "name": "task_duration_seconds", "severity": "warning", "observed_at": "2026-11-22T12:36:00Z", "value": 2140.0, "threshold": 900.0, "message": "task load_orders_fact running far beyond its usual duration"},
+    {"signal_id": "sig-006", "source": "airflow", "component": "etl-orders-daily", "signal_type": "log_error", "name": "schema_drift_detected", "severity": "critical", "observed_at": "2026-11-22T12:15:00Z", "value": null, "threshold": null, "message": "column customer_tier missing from source contract v3"},
+    {"signal_id": "sig-007", "source": "airflow", "component": "etl-orders-daily", "signal_type": "log_error", "name": "task_retry", "severity": "warning", "observed_at": "2026-11-22T12:38:00Z", "value": 2.0, "threshold": 3.0, "message": "load_orders_fact retry 2/3 after OperationalError: could not obtain lock on relation orders_fact"},
+    {"signal_id": "sig-008", "source": "postgres_exporter", "component": "orders-db", "signal_type": "metric", "name": "lock_wait_seconds_max", "severity": "critical", "observed_at": "2026-11-22T12:40:00Z", "value": 412.0, "threshold": 60.0, "message": "longest lock wait above threshold"},
+    {"signal_id": "sig-009", "source": "cloudwatch_alarm", "component": "orders-db", "signal_type": "alert", "name": "DBLocksBlocked", "severity": "critical", "observed_at": "2026-11-22T12:42:00Z", "value": null, "threshold": null, "message": "alarm DBLocksBlocked in ALARM state"},
+    {"signal_id": "sig-010", "source": "airflow", "component": "etl-orders-daily", "signal_type": "alert", "name": "DagRunSLAMissed", "severity": "warning", "observed_at": "2026-11-22T12:55:00Z", "value": null, "threshold": null, "message": "dag etl_orders_daily missed its SLA"},
+    {"signal_id": "sig-011", "source": "cloudwatch", "component": "reporting-warehouse", "signal_type": "metric", "name": "cpu_utilization", "severity": "info", "observed_at": "2026-11-21T03:10:00Z", "value": 61.0, "threshold": 85.0, "message": "routine nightly load"}
+  ],
+  "change_events": [
+    {"change_id": "chg-001", "component": "etl-orders-daily", "change_type": "deploy", "description": "Deploy v2.4.0: orders_fact load switched to a single long-running MERGE transaction", "actor": "ci-pipeline", "occurred_at": "2026-11-22T12:08:00Z", "reference": "release/v2.4.0"},
+    {"change_id": "chg-002", "component": "orders-db", "change_type": "schema_migration", "description": "Migration 0427: add index on orders_fact(customer_id)", "actor": "dba-team", "occurred_at": "2026-11-22T11:50:00Z", "reference": "migrations/0427"}
+  ],
+  "lineage": [
+    {"upstream": "etl-orders-daily", "downstream": "orders-db"}
+  ]
+}
